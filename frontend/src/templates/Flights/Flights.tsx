@@ -24,38 +24,37 @@ const columns = [
   },
 ]
 
-const items = [
-  {
-    id: '2',
-    from: 'SBGR',
-    to: 'SBPA',
-    aircraft: 'C172 (PT-OLA)',
-    duration: '02:30',
-  },
-  {
-    id: '1',
-    from: 'SBNT',
-    to: 'SBBR',
-    aircraft: 'C172 (PT-OLA)',
-    duration: '01:30',
-  },
-]
+type Flight = {
+  id: string
+  from: string
+  to: string
+  duration: string
+}
 
-const Flights = () => {
+export type FlightsProps = {
+  flights: Flight[]
+}
+
+const Flights = ({ flights }: FlightsProps) => {
   return (
     <AppContainer>
       <S.HeaderWrapper>
         <Heading>Flights</Heading>
-
         <Link href="/flights/new">
-          <Button as="a">Create</Button>
+          <Button as="a" size="large">
+            Create
+          </Button>
         </Link>
       </S.HeaderWrapper>
       <Table
         columns={columns}
-        items={items.map((item) => ({ ...item, href: `/flights/${item.id}` }))}
+        items={flights?.map((flight) => ({
+          ...flight,
+          href: `/flights/${flight.id}`,
+        }))}
       />
     </AppContainer>
   )
 }
+
 export default Flights

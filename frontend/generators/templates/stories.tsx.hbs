@@ -1,9 +1,9 @@
 import { Story, Meta } from '@storybook/react'
-import {{pascalCase name}} from './{{pascalCase name}}'
+import {{pascalCase name}}, { {{pascalCase name}}Props } from './{{pascalCase name}}'
 
 export default {
   title: '{{pascalCase name}}',
   component: {{pascalCase name}},
-} as Meta
+} as Meta<{{pascalCase name}}Props>
 
-export const Default: Story = () => <{{pascalCase name}} />
+export const Default: Story<{{pascalCase name}}Props> = (args) => <{{pascalCase name}} {...args} />

@@ -1,7 +1,8 @@
-import type { NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import Flight from 'templates/Flight'
+import protectedRoutes from 'utils/protected-routes'
 
 const FlightPage: NextPage = () => {
   const router = useRouter()
@@ -17,3 +18,11 @@ const FlightPage: NextPage = () => {
 }
 
 export default FlightPage
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await protectedRoutes(context)
+
+  return {
+    props: {},
+  }
+}

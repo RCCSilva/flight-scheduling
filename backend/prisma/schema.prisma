@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Hash for = and <>
+// Read: https://www.prisma.io/docs/concepts/components/prisma-schema/indexes
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  name     String
+  password String
+  Pilot    Pilot[]
+}
+
+model Pilot {
+  id     Int      @id @default(autoincrement())
+  name   String   @db.VarChar(64)
+  user   User?    @relation(fields: [userId], references: [id])
+  userId Int?
+  Flight Flight[]
+}
+
+model Airport {
+  id   Int      @id @default(autoincrement())
+  name String   @unique
+  icao String   @db.VarChar(4)
+  From Flight[] @relation("airportFrom")
+  To   Flight[] @relation("airportTo")
+
+  @@index([icao], type: Hash)
+}
+
+model Aircraft {
+  id       Int      @id @default(autoincrement())
+  register String   @unique @db.VarChar(16)
+  Flight   Flight[]
+
+  @@index([register], type: Hash)
+}
+
+enum FlightStatus {
+  Scheduled
+  Ongoing
+  Finished
+}
+
+model Flight {
+  id         Int          @id @default(autoincrement())
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @default(now())
+  status     FlightStatus @default(Scheduled)
+  pilot      Pilot        @relation(fields: [pilotId], references: [id])
+  pilotId    Int
+  aircraft   Aircraft     @relation(fields: [aircraftId], references: [id])
+  aircraftId Int
+  from       Airport      @relation("airportFrom", fields: [fromId], references: [id])
+  fromId     Int
+  to         Airport      @relation("airportTo", fields: [toId], references: [id])
+  toId       Int
+}

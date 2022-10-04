@@ -1,10 +1,13 @@
-import { Aircraft, Airport, Flight as FlightDb } from '@prisma/client'
+import { Flight as FlightDb } from '@prisma/client'
+
 import { prismaClient } from '~/infrastructure/prisma'
 import { GoodResult } from '~/types/result'
 import { composeResults } from '~/utils/compose-results'
 import { safePromise } from '~/utils/safe-promise'
-import { Flight, FlightStatus } from '../types/flight'
-import { Pilot } from '../types/pilot'
+import { Aircraft } from '../../types/aircraft'
+import { Airport } from '../../types/airport'
+import { Flight, FlightStatus } from '../../types/flight'
+import { Pilot } from '../../types/pilot'
 
 type RepositoryCreateFlight = {
   aircraft: Aircraft
@@ -50,11 +53,7 @@ const makeToFlightModel = ({
   }
 }
 
-const createFlight = async (data: RepositoryCreateFlight) => {
+export const createFlight = async (data: RepositoryCreateFlight) => {
   const toFlightModel = makeToFlightModel(data)
   return composeResults(insertFlight, toFlightModel)(data)
-}
-
-export default {
-  createFlight,
 }

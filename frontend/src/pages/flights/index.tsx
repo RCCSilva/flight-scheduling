@@ -12,6 +12,7 @@ export const getServerSideProps: GetServerSideProps<FlightsProps> = async (
   context
 ) => {
   const session = await protectedRoutes(context)
+  console.log('session', session)
 
   const flights = [
     {

@@ -18,7 +18,15 @@ const getUser = async (
   return await prismaClient.user.findFirst({ where, select })
 }
 
+const getUserWithPassword = async (where: Prisma.UserWhereInput) => {
+  return await prismaClient.user.findFirst({
+    where,
+    select: { id: true, email: true, name: true, password: true },
+  })
+}
+
 export default {
   createUser,
   getUser,
+  getUserWithPassword,
 }

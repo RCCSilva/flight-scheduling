@@ -1,6 +1,6 @@
 /**
  * @openapi
- * /api/v1/user:
+ * /api/v1/user/signup:
  *   post:
  *     tags:
  *        - Users
@@ -32,7 +32,7 @@ import { userRouter } from '.'
 import userHandler from '../user-handler'
 
 userRouter.post(
-  '/api/v1/user',
+  '/api/v1/user/signup',
   body('name')
     .isLength({ min: 1, max: 32 })
     .withMessage('Name must be between 1 and 32 characters'),

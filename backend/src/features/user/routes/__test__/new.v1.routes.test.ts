@@ -2,9 +2,9 @@ import supertest from 'supertest'
 import { faker } from '@faker-js/faker'
 import { app } from '~/app'
 
-describe('/api/v1/user', () => {
+describe('/api/v1/user/signup', () => {
   it('returns bad request if no body params are not set', async () => {
-    const response = await supertest(app).post('/api/v1/user').send({})
+    const response = await supertest(app).post('/api/v1/user/signup').send({})
 
     expect(response.statusCode).toEqual(400)
     expect(response.body).toEqual({
@@ -26,7 +26,7 @@ describe('/api/v1/user', () => {
       email: faker.internet.email(),
       password: 'Password!23',
     }
-    const response = await supertest(app).post('/api/v1/user').send(data)
+    const response = await supertest(app).post('/api/v1/user/signup').send(data)
 
     expect(response.statusCode).toEqual(201)
 
@@ -43,9 +43,9 @@ describe('/api/v1/user', () => {
       password: 'Password!23',
     }
 
-    await supertest(app).post('/api/v1/user').send(data).expect(201)
+    await supertest(app).post('/api/v1/user/signup').send(data).expect(201)
 
-    const response = await supertest(app).post('/api/v1/user').send(data)
+    const response = await supertest(app).post('/api/v1/user/signup').send(data)
 
     expect(response.statusCode).toEqual(400)
   })

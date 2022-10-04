@@ -14,7 +14,7 @@ export const safePromise = async <T>(
       isOk: true,
       data: result,
     }
-  } catch (err: any) {
+  } catch (err) {
     logger.log({
       level: 'warn',
       message: `Promise failed to resolve: ${err}`,

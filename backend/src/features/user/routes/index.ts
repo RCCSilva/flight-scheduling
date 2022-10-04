@@ -4,4 +4,5 @@ const router = express.Router()
 
 export { router as userRouter }
 
-import './new.v1.routes'
+import './signup.v1.routes'
+import './signin.v1.routes'
